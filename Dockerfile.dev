@@ -1,0 +1,14 @@
+FROM node:12-alpine
+
+ENV PORT=8000
+ENV NODE_ENV=development
+
+WORKDIR /app
+COPY tsconfig.json package.json yarn.lock ./
+RUN echo "Hallo de dockerfile werkt"
+RUN apk update && \
+    apk add --no-cache python build-base
+RUN yarn install --frozen-lockfile --production=false
+
+EXPOSE ${PORT}
+CMD yarn run dev
